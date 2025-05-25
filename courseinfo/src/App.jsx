@@ -3,6 +3,7 @@ const Course = ({ course }) => {
 		<>
 			<Header course={course.name} />
 			<Content parts={course.parts} />
+			<Total parts={course.parts}/>
 		</>
 	);
 };
@@ -32,7 +33,7 @@ const Part = ({ name, exercises }) => {
 const Total = ({ parts }) => {
 	const totalExcercises = parts.reduce((acc, part) => acc + part.exercises, 0);
 
-	return <p>Number of exercises: {totalExcercises}</p>;
+	return <p>Total of {totalExcercises} exercises</p>;
 };
 
 const App = () => {
@@ -43,6 +44,7 @@ const App = () => {
 			{ id: 1, name: "Fundamentals of React", exercises: 10 },
 			{ id: 2, name: "Using props to pass data", exercises: 7 },
 			{ id: 3, name: "State of a component", exercises: 14 },
+			{ id: 4, name: "Redux", exercises: 11 },
 		],
 	};
 
