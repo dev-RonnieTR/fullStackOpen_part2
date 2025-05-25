@@ -1,6 +1,8 @@
 import { Header, Content, Total } from ".";
 
 export const Course = ({ course }) => {
+		console.log("testing");
+
 	return (
 		<>
 			<Header course={course.name} />
