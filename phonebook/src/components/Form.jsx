@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { FormTextInput } from ".";
-import { SubmitButton } from ".";
+import { FormTextInput, SubmitButton } from ".";
 
 export const Form = ({ persons, setPersons, data }) => {
 	const emptyData = Object.fromEntries(data.map((data) => [data, ""]));
 	//Returns an object where each key is an element from the data array, and each value is initialized to an empty string.
 	// Example: emptyData = { name: "", number: "", ... }
-	
+
 	const [values, setValues] = useState(emptyData); //State that will work as the onChange handler for every text input
 
 	const handleChange = (event) => {
@@ -40,16 +39,18 @@ export const Form = ({ persons, setPersons, data }) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			{data.map((data) => (
-				<FormTextInput
-					key={data}
-					id={data}
-					onChange={handleChange}
-					values={values}
-				/>
-			))}
-			<SubmitButton text="Add" values={values} />
-		</form>
+		<section>
+			<form onSubmit={handleSubmit}>
+				{data.map((data) => (
+					<FormTextInput
+						key={data}
+						id={data}
+						onChange={handleChange}
+						values={values}
+					/>
+				))}
+				<SubmitButton text="Add" values={values} />
+			</form>
+		</section>
 	);
 };
