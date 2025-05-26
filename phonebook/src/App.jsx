@@ -1,12 +1,16 @@
 import { useState } from "react";
 
-const Form = ({ setPersons }) => {
+const Form = ({ persons, setPersons }) => {
 	const [newName, setNewName] = useState("");
 	const handleChange = (event) => {
 		setNewName(event.target.value);
 	};
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		if (persons.some((person) => person.name === newName)) {
+			alert(`${newName} is already added to phonebook`);
+			return;
+		}
 		setPersons((prevState) => [...prevState, { name: newName }]);
 		setNewName("");
 	};
@@ -54,7 +58,7 @@ const App = () => {
 	return (
 		<>
 			<h1>Phonebook</h1>
-			<Form setPersons={setPersons} />
+			<Form persons={persons} setPersons={setPersons} />
 			<Numbers persons={persons} />
 		</>
 	);
