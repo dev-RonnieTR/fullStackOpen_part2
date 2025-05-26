@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { FormTextInput } from '.';
-import { SubmitButton } from '.';
+import { FormTextInput } from ".";
+import { SubmitButton } from ".";
 
-export const Form = ({ persons, setPersons, data, newData }) => {
-	const [values, setValues] = useState(newData); //State that will work as the onChange handler for every text input
+export const Form = ({ persons, setPersons, data }) => {
+	const emptyData = Object.fromEntries(data.map((data) => [data, ""]));
+	//Returns an object where each key is an element from the data array, and each value is initialized to an empty string.
+	// Example: newData = { name: "", number: "", ... }
+	
+	const [values, setValues] = useState(emptyData); //State that will work as the onChange handler for every text input
 
 	const handleChange = (event) => {
 		console.log(`Input changed: ${event.target.id} = ${event.target.value}`);
@@ -31,6 +35,8 @@ export const Form = ({ persons, setPersons, data, newData }) => {
 			console.log("Updated persons list:", updatedPersons);
 			return updatedPersons;
 		});
+
+		setValues(emptyData);
 	};
 
 	return (
