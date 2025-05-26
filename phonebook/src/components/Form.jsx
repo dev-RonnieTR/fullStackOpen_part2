@@ -41,6 +41,7 @@ export const Form = ({ persons, setPersons, data }) => {
 	return (
 		<section>
 			<form onSubmit={handleSubmit}>
+				<h2>Add a new person</h2>
 				{data.map((data) => (
 					<FormTextInput
 						key={data}
