@@ -19,9 +19,9 @@ export const Numbers = ({ persons, data, filter }) => {
 		<section>
 			<h2>Numbers</h2>
 			{filteredPersons.map((person) => (
-				<div key={person.name}>
+				<div key={person.id}>
 					{data.map((data) => (
-						<span key={`${person.name}-${data}`}>{person[data]} </span>
+						<span key={`${person.id}-${data}`}>{person[data]} </span>
 					))}
 				</div>
 			))}
