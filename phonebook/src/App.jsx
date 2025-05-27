@@ -1,25 +1,24 @@
 import { useState, useEffect } from "react";
 import { Form, Numbers, Filter } from "./components";
-import axios from "axios";
+import personService from "./services/persons";
 
 const data = ["name", "number"]; //Array that contains the pieces of data to be collected from the person. They have to be used as the id for the inputs
 
-const fetchAndSet = async (url, setterFunction) => {
-	try {
-		console.log("Fetching JSON data")
-		const response = await axios.get(url);
-		console.log("Fetch successful")
-		setterFunction(response.data);
-	} catch (error) {
-		console.error("Error fetching data:", error);
-	}
-};
-
 const App = () => {
 	const [persons, setPersons] = useState([]);
+
 	useEffect(() => {
-		fetchAndSet("http://localhost:3001/persons", setPersons);
-	}, []);
+		(async () => {
+			try {
+				console.log("Fetching JSON data");
+				const initialPersons = await personService.getAll();
+				setPersons(initialPersons);
+				console.log("Fetch successful");
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		})();
+	},[]);
 
 	const [filter, setFilter] = useState("");
 	return (
