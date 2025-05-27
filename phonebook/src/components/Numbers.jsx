@@ -1,15 +1,19 @@
-export const Numbers = ({ persons, data, filter }) => {
-	let filteredPersons = [];
+import { useEffect, useMemo } from "react";
 
-	if (filter) {
-		filteredPersons = persons.filter((person) =>
-			person.name.toLowerCase().includes(filter.toLowerCase())
-		);
-		console.log("Filtered applied:", filter)
-	} else {
-		filteredPersons = persons;
-		console.log("No filter applied");
-	}
+export const Numbers = ({ persons, data, filter }) => {
+	let filteredPersons = useMemo(() => {
+		return filter
+			? persons.filter((person) =>
+					person.name.toLowerCase().includes(filter.toLowerCase())
+			  )
+			: persons;
+	}, [persons, filter]);
+	//filteredPersons uses useMemo to memoize the result if "persons" or "filter" have not changed.
+
+	useEffect(() => {
+		if (filter) console.log("Filter applied:", filter);
+		else console.log("No filter applied");
+	}, [filter]);
 
 	return (
 		<section>
