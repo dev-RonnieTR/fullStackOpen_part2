@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FormTextInput, SubmitButton } from ".";
+import personService from "../services/persons";
 
 export const Form = ({ persons, setPersons, data }) => {
 	const emptyData = Object.fromEntries(data.map((data) => [data, ""]));
@@ -27,15 +28,20 @@ export const Form = ({ persons, setPersons, data }) => {
 			alert(`${values.name} is already added to phonebook`);
 			return;
 		}
+
 		console.log("Submitting form with values:", values);
-
-		setPersons((prevState) => {
-			const updatedPersons = [...prevState, values];
-			console.log("Updated persons list:", updatedPersons);
-			return updatedPersons;
-		});
-
-		setValues(emptyData);
+		const newPerson = { ...values, id: `${persons.length + 1}` };
+		(async () => {
+			try {
+				console.log("Posting new person to API...");
+				const response = await personService.create(newPerson);
+				setPersons((prevState) => [...prevState, response]);
+				console.log("POST was successful. API has been updated")
+				setValues(emptyData);
+			} catch (error) {
+				console.error(error)
+			}
+		})();
 	};
 
 	return (
