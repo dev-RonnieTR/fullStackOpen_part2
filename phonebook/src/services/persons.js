@@ -13,9 +13,14 @@ const handleRequest = async (requestFunction, requestType) => {
 };
 
 const getAll = () => handleRequest(() => axios.get(baseURL), "fetch");
+
 const create = (newObject) =>
 	handleRequest(() => axios.post(baseURL, newObject), "create");
+
 const update = (id, newObject) =>
 	handleRequest(() => axios.put(`${baseURL}/${id}`, newObject), "update");
 
-export default { getAll, create, update };
+const remove = (id) =>
+	handleRequest(() => axios.delete(`${baseURL}/${id}`), "delete");
+
+export default { getAll, create, update, remove };

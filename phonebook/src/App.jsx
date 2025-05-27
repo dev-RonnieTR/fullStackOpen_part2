@@ -18,15 +18,23 @@ const App = () => {
 				console.error("Error fetching data:", error);
 			}
 		})();
-	},[]);
+	}, []);
 
 	const [filter, setFilter] = useState("");
 	return (
 		<>
 			<h1>Phonebook</h1>
 			<Filter filter={filter} setFilter={setFilter} />
-			<Form persons={persons} setPersons={setPersons} data={data} />
-			<Numbers persons={persons} data={data} filter={filter} />
+			<Form 
+				persons={persons} 
+				setPersons={setPersons} 
+				data={data} />
+			<Numbers
+				persons={persons}
+				setPersons={setPersons}
+				data={data}
+				filter={filter}
+			/>
 		</>
 	);
 };

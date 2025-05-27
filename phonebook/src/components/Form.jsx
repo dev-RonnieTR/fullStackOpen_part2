@@ -24,8 +24,28 @@ export const Form = ({ persons, setPersons, data }) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (persons.some((person) => person.name === values.name)) {
-			console.warn(`${values.name} is already in the phonebook`);
-			alert(`${values.name} is already added to phonebook`);
+			const action = window.confirm(
+				`${values.name} is already in the phonebook. Do you want to replace the old number with the one entered?`
+			);
+			if (action) {
+				const personToUpdate = persons.find(
+					(person) => person.name === values.name
+				);
+				(async () => {
+					const response = await personService.update(
+						personToUpdate.id,
+						values
+					);
+					setPersons((prevState) => {
+						const updatedState = [...prevState].map((person) =>
+							person.id === personToUpdate.id ? response : person
+						);
+						return updatedState;
+					});
+				})();
+			} else {
+				setValues(emptyData);
+			}
 			return;
 		}
 
@@ -36,10 +56,10 @@ export const Form = ({ persons, setPersons, data }) => {
 				console.log("Posting new person to API...");
 				const response = await personService.create(newPerson);
 				setPersons((prevState) => [...prevState, response]);
-				console.log("POST was successful. API has been updated")
+				console.log("POST was successful. API has been updated");
 				setValues(emptyData);
 			} catch (error) {
-				console.error(error)
+				console.error(error);
 			}
 		})();
 	};
