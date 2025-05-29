@@ -6,7 +6,7 @@ const App = () => {
 	const [value, setValue] = useState("");
 	const [countries, setCountries] = useState([]);
 
-	const fetchCountries = async () => {
+	const fetchAndSetCountries = async () => {
 		try {
 			console.log("Fetching countries...");
 			const response = await countriesService.getAll();
@@ -19,7 +19,7 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		fetchCountries();
+		fetchAndSetCountries();
 	}, []);
 
 	if (!countries.length) return; //Nothing renders if countries is empty.
