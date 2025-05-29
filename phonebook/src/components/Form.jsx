@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FormTextInput, SubmitButton } from ".";
 import personService from "../services/persons";
 
-export const Form = ({ persons, setPersons, data }) => {
+export const Form = ({ persons, setPersons, data, setMessage }) => {
 	const emptyData = Object.fromEntries(data.map((data) => [data, ""]));
 	//Returns an object where each key is an element from the data array, and each value is initialized to an empty string.
 	// Example: emptyData = { name: "", number: "", ... }
@@ -32,16 +32,32 @@ export const Form = ({ persons, setPersons, data }) => {
 					(person) => person.name === values.name
 				);
 				(async () => {
-					const response = await personService.update(
-						personToUpdate.id,
-						values
-					);
-					setPersons((prevState) => {
-						const updatedState = [...prevState].map((person) =>
-							person.id === personToUpdate.id ? response : person
+					try {
+						const response = await personService.update(
+							personToUpdate.id,
+							values
 						);
-						return updatedState;
-					});
+						setPersons((prevState) => {
+							const updatedState = [...prevState].map((person) =>
+								person.id === personToUpdate.id ? response : person
+							);
+							return updatedState;
+						});
+						setMessage({
+							content: `${personToUpdate.name}'s number updated`,
+							type: "success",
+						});
+					} catch {
+						setMessage({
+							content: `Error: this contact was already removed before. Contact list updated`,
+							type: "error",
+						});
+						console.log("Tried updating a contact that was already deleted")
+						console.log("Re-fetching contacts...")
+						const updatedPersons = await personService.getAll();
+						setPersons(updatedPersons);
+						console.log("Contact list updated")
+					}
 				})();
 			} else {
 				setValues(emptyData);
@@ -50,12 +66,14 @@ export const Form = ({ persons, setPersons, data }) => {
 		}
 
 		console.log("Submitting form with values:", values);
-		const newPerson = { ...values, id: `${persons.length + 1}` };
+		const newPersonID = Number(persons[persons.length-1].id) + 1
+		const newPerson = { ...values, id: `${newPersonID}` };
 		(async () => {
 			try {
 				console.log("Posting new person to API...");
 				const response = await personService.create(newPerson);
 				setPersons((prevState) => [...prevState, response]);
+				setMessage({ content: `Added ${newPerson.name}`, type: "success" });
 				console.log("POST was successful. API has been updated");
 				setValues(emptyData);
 			} catch (error) {

@@ -1,0 +1,38 @@
+.Notification__Container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+    width: 80%;
+	border-radius: 1rem;
+	background-color: lightgray;
+	margin: 1rem 0;
+    animation: fade-out 3s ease-in forwards;
+}
+
+.Notification__Message {
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+.borderIfSuccess {
+    border: solid 3px green;
+}
+.borderIfError {
+    border: solid 3px red;
+}
+.fontColorIfSuccess {
+    color: green;
+}
+.fontColorIfError {
+    color: red;
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 100%;
+    }
+    to {
+        opacity: 0%;
+    }
+}

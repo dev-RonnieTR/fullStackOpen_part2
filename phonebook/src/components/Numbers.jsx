@@ -28,6 +28,7 @@ export const Numbers = ({ persons, setPersons, data, filter }) => {
 			setPersons((prevState) =>
 				[...prevState].filter((person) => person.id !== id)
 			);
+			console.log("Contact deleted")
 		} else {
 			return;
 		}
@@ -38,7 +39,6 @@ export const Numbers = ({ persons, setPersons, data, filter }) => {
 			<h2>Numbers</h2>
 			{filteredPersons.map((person) => (
 				<div key={person.id}>
-					{console.log(person.id)}
 					<span key={person.id}>
 						{data.map((data) => (
 							<span key={`${person.id}-${data}`}>{person[data]} </span>
