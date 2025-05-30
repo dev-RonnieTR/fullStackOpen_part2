@@ -21,7 +21,7 @@ const App = () => {
 		fetchAndSetCountries();
 	}, []);
 
-	if (!countries.length) return; //Nothing renders if countries is empty.
+	if (!countries.length) return <p>Loading...</p>; //Renders a loading message if the fetching is still in process
 
 	return (
 		<>
