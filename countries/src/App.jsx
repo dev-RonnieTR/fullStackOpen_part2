@@ -26,7 +26,7 @@ const App = () => {
 	return (
 		<>
 			<UserInput value={value} setValue={setValue} />
-			<Results value={value} countries={countries} />
+			<Results value={value} setValue={setValue} countries={countries} />
 		</>
 	);
 };

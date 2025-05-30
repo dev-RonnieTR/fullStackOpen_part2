@@ -1,4 +1,6 @@
-const Results = ({ value, countries }) => {
+import Button from "./Button";
+
+const Results = ({ value, setValue, countries }) => {
 	const countryNames = countries.map((country) => country.name.common);
 
 	if (!value) {
@@ -55,7 +57,13 @@ const Results = ({ value, countries }) => {
 				<p>Possible matches:</p>
 				<ul>
 					{filter.map((country) => (
-						<li key={country}>{country}</li>
+						<li id={country} key={country}>
+							<span>{country}</span>{" "}
+							<Button
+								onClick={(e) => setValue(e.target.parentElement.id)}
+								text="Show"
+							/>
+						</li>
 					))}
 				</ul>
 			</div>
