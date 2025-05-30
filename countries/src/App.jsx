@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UserInput } from "./components";
+import { UserInput, Results } from "./components";
 import countriesService from "./services/countries";
 
 const App = () => {
@@ -10,8 +10,7 @@ const App = () => {
 		try {
 			console.log("Fetching countries...");
 			const response = await countriesService.getAll();
-			const countryNames = response.map((country) => country.name.common);
-			setCountries(countryNames);
+			setCountries(response);
 			console.log("Fetch successful");
 		} catch {
 			console.log("Fetch failed");
@@ -27,6 +26,7 @@ const App = () => {
 	return (
 		<>
 			<UserInput value={value} setValue={setValue} />
+			<Results value={value} countries={countries} />
 		</>
 	);
 };
