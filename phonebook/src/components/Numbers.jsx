@@ -3,14 +3,14 @@ import personService from "../services/persons";
 import { Button } from ".";
 
 export const Numbers = ({ persons, setPersons, data, filter }) => {
-	let filteredPersons = useMemo(() => {
-		return filter
-			? persons.filter((person) =>
-					person.name.toLowerCase().includes(filter.toLowerCase())
-			  )
-			: persons;
-	}, [persons, filter]);
-	//filteredPersons uses useMemo to memoize the result if "persons" or "filter" have not changed.
+let filteredPersons = useMemo(() => {
+  const base = Array.isArray(persons) ? persons : [];
+  return filter
+    ? base.filter((person) =>
+        person.name.toLowerCase().includes(filter.toLowerCase())
+      )
+    : base;
+}, [persons, filter]);
 
 	useEffect(() => {
 		if (filter) console.log("Filter applied:", filter);
