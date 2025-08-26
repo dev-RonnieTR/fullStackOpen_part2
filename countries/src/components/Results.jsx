@@ -12,9 +12,9 @@ const Results = ({ value, setValue, countries }) => {
 	);
 	const doesValueMatch = filter.some(
 		(country) => country.toLowerCase() === value.toLowerCase()
-	);
+	); //True when user-entered is an exact match of a country name
 
-	if (filter.length === 1 || doesValueMatch) {
+	if (filter.length === 1 || doesValueMatch) { //If there is only one possible country OR an exact match
 		const country = doesValueMatch
 			? countries.find(
 					(country) => country.name.common.toLowerCase() === value.toLowerCase()
