@@ -23,7 +23,7 @@ export const Form = ({ persons, setPersons, data, setMessage }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		if (persons.some((person) => person.name === values.name)) {
+		if (Array.isArray(persons) && persons.some((person) => person.name === values.name)) {
 			const action = window.confirm(
 				`${values.name} is already in the phonebook. Do you want to replace the old number with the one entered?`
 			);
